@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Yoü by Hü</title>
+    <meta name="description"
+        content="Explore the Barber Gallery at Yoü by Hü. A showcase of precision cuts, modern styles, and the art of barbering in San Francisco.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Oswald:wght@300;400;500;700&family=Playfair+Display:ital@0;1&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="barber.css">
+    <style>
+        /* Gallery Specific Styles */
+        .page-header {
+            padding: 150px 0 80px;
+            background-color: var(--color-bg-secondary);
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .gallery-grid-page {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 4rem 0 8rem;
+        }
+
+        .gallery-card {
+            position: relative;
+            background-color: var(--color-bg-card);
+            overflow: hidden;
+            aspect-ratio: 4/5;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .gallery-card:hover {
+            border-color: var(--color-accent);
+            transform: translateY(-5px);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+            filter: grayscale(20%);
+        }
+
+        .gallery-card:hover img {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        .gallery-card:hover .gallery-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-title {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: #fff;
+            letter-spacing: 1px;
+        }
+
+        /* Lightbox (Simple interaction) */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-img {
+            max-width: 90%;
+            max-height: 90vh;
+            border: 2px solid var(--color-accent);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 3rem;
+            color: #fff;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .lightbox-close:hover {
+            color: var(--color-accent);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="barber.html" class="logo">
+                <img src="assets/logo_white.png" alt="Yoü by Hü Logo">
+                <span class="logo-text">Yoü by Hü</span>
+            </a>
+
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="barber.html" class="nav-link">Home</a></li>
+                <li><a href="barber.html#services" class="nav-link">Services</a></li>
+                <li><a href="barber.html#about" class="nav-link">About</a></li>
+                <li><a href="#" class="nav-link active">Gallery</a></li>
+                <li><a href="barber.html#contact" class="nav-link">Contact</a></li>
+                <li><a href="https://youbyhu.com/reservations" class="btn">Reservations</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <span class="section-subtitle">The Collection</span>
+            <h1 class="section-title">THE BARBER<br>GALLERY</h1>
+        </div>
+    </header>
+
+    <!-- Gallery Grid -->
+    <section class="gallery-section">
+        <div class="container gallery-grid-page">
+            <!-- Items 1-8 (Using duplicated assets for demo) -->
+            <div class="gallery-card" onclick="openLightbox(this)">
+                <img src="assets/gallery_1.jpg" alt="Precision Cut">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">PRECISION CUT</h3>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="openLightbox(this)">
+                <img src="assets/gallery_2.jpg" alt="Styling Detail">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">STYLING DETAIL</h3>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="openLightbox(this)">
+                <img src="assets/gallery_3.jpg" alt="Artistic Vision">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">ARTISTIC VISION</h3>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="openLightbox(this)">
+                <img src="assets/gallery_4.jpg" alt="The Shop">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">THE SANCTUARY</h3>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="openLightbox(this)">
+                <img src="assets/gallery_5.jpg" alt="Classic Fade">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">CLASSIC FADE</h3>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="openLightbox(this)">
+                <img src="assets/gallery_6.jpg" alt="Modern Mullet">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">MODERN MULLET</h3>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="openLightbox(this)">
+                <img src="assets/gallery_7.jpg" alt="Texture Work">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">TEXTURE WORK</h3>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="openLightbox(this)">
+                <img src="assets/gallery_8.jpg" alt="Beard Sculpting">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">BEARD SCULPTING</h3>
+                </div>
+            </div>
+
+            <!-- New Items 9-18 -->
+            <div class="gallery-card" onclick="openLightbox(this)">
+                <img src="assets/gallery_9.jpg" alt="Gallery Image 9">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">FRESH CUT</h3>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="openLightbox(this)">
+                <img src="assets/gallery_10.jpg" alt="Gallery Image 10">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">CLEAN LINES</h3>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="openLightbox(this)">
+                <img src="assets/gallery_11.jpg" alt="Gallery Image 11">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">SHADED FADE</h3>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="openLightbox(this)">
+                <img src="assets/gallery_12.jpg" alt="Gallery Image 12">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">THE LOOK</h3>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="openLightbox(this)">
+                <img src="assets/gallery_13.jpg" alt="Gallery Image 13">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">DETAIL WORK</h3>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="openLightbox(this)">
+                <img src="assets/gallery_14.jpg" alt="Gallery Image 14">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">PRECISION</h3>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="openLightbox(this)">
+                <img src="assets/gallery_15.jpg" alt="Gallery Image 15">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">STYLE & FLOW</h3>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="openLightbox(this)">
+                <img src="assets/gallery_16.jpg" alt="Gallery Image 16">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">MASTERPIECE</h3>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="openLightbox(this)">
+                <img src="assets/gallery_17.jpg" alt="Gallery Image 17">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">SHARP EDGE</h3>
+                </div>
+            </div>
+
+            <div class="gallery-card" onclick="openLightbox(this)">
+                <img src="assets/gallery_18.jpg" alt="Gallery Image 18">
+                <div class="gallery-overlay">
+                    <h3 class="gallery-title">FINISHING TOUCH</h3>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; padding-bottom: 8rem;">
+            <p style="color: var(--color-text-muted); margin-bottom: 2rem;">Follow us for the latest looks</p>
+            <a href="https://www.instagram.com/szrhnd.hu/" target="_blank" class="btn btn-outline"
+                style="border-radius: 50px; padding: 1rem 3rem;"><i class="fab fa-instagram"></i> @SZRHND.HU</a>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <img class="lightbox-img" id="lightbox-img" src="" alt="Gallery Image">
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <a href="barber.html" class="footer-logo">
+                    <img src="assets/logo_white.png" alt="You by Hu Logo">
+                </a>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/szrhnd.hu/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/YOUbyHu/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Yoü by Hü. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple Gallery Script
+        function openLightbox(element) {
+            const img = element.querySelector('img');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+
+            lightboxImg.src = img.src;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        // Mobile Menu Reuse
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+        }
+    </script>
+</body>
+
+</html>
